@@ -22,8 +22,6 @@ public class Square{
         this.isHighlighted = !this.isHighlighted;
         if (isHighlighted && !piece.equals("r")){
             this.piece = "*";
-        } else if (!isHighlighted && !piece.equals("r")){
-            // this.piece =
         }
     }
 

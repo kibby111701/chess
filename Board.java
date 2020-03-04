@@ -5,10 +5,10 @@ public class Board{
 
     public Board(){
         squares = new Square[8][8];
-        boolean isBlack = false;
+
 
         for (int row = 0; row < squares.length; row++){
-            
+            boolean isBlack = false;
             if (row % 2 == 0){
                 isBlack = true;
             }
