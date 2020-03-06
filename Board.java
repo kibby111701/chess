@@ -31,4 +31,12 @@ public class Board{
     public Square getSquare(int rank, int file){
         return squares[squares.length - rank][file - 1];
     }
+
+    // public void clearBoard(){
+    //     for (int i = 0; i <= 7; i++){
+    //         for (int j = 0; j <= 7; j++){
+    //             if squares[i][j]
+    //         }
+    //     }
+    // }
 }

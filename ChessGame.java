@@ -6,25 +6,36 @@ public class ChessGame{
         this.board = new Board();
     }
 
-    public void placeRook(int rank, int file){
+    public int placeRook(int rank, int file){
+        int influence = 0;
+        
         if (board.getSquare(rank, file) != null){
             board.getSquare(rank, file).setPiece("r");
 
             for (int i = 1; i <= 8; i++){
-                board.getSquare(rank, i).toggleHighlight();
+                if (i != file){
+                    board.getSquare(rank, i).toggleHighlight();
+                    influence += 1;
+                }
             }
 
             for (int i = 1; i <= 8; i++){
-                board.getSquare(i, file).toggleHighlight();
+                if (i != rank){
+                    board.getSquare(i, file).toggleHighlight();
+                    influence += 1;
+                }
             }
 
         }
+        System.out.println(influence);
+        return influence;
     }
 
 
-    public void placeKnight(int rank, int file){
+    public int placeKnight(int rank, int file){
+        int influence = 0;
+        
         if (board.getSquare(rank, file) != null){
-
 
             board.getSquare(rank, file).setPiece("k");
 
@@ -32,11 +43,75 @@ public class ChessGame{
                 for (int j = 1; j <= 8; j++){
                     if (dist(rank, file, i, j) == Math.sqrt(5)){
                         board.getSquare(i, j).toggleHighlight();
+                        influence += 1;
+                    }
+                }
+            }
+        }
+        System.out.println(influence);
+        return influence;
+    }
+
+    public int placeBishop(int rank, int file){
+        int influence = 0;
+
+        if (board.getSquare(rank, file) != null){
+            board.getSquare(rank, file).setPiece("b");
+
+            for (int i = 1; i <= 8; i++){
+                for (int j = 1; j <= 8; j++){
+                    int rankDist = Math.abs(rank - i);
+                    int fileDist = Math.abs(file - j);
+
+                    if (rankDist == fileDist && i != rank){
+                        board.getSquare(i, j).toggleHighlight();
+                        influence += 1;
+                    }
+                }
+            }
+        }
+        System.out.println(influence);
+        return influence;
+    }
+
+    public int placeQueen(int rank, int file){
+        int influence = 0;
+
+        if (board.getSquare(rank, file) != null){
+            board.getSquare(rank, file).setPiece("q");
+
+            for (int i = 1; i <= 8; i++){
+                for (int j = 1; j <= 8; j++){
+                    int rankDist = Math.abs(rank - i);
+                    int fileDist = Math.abs(file - j);
+
+                    if (rankDist == fileDist && i != rank){
+                        board.getSquare(i, j).toggleHighlight();
+                        influence += 1;
                     }
                 }
             }
 
+            for (int i = 1; i <= 8; i++){
+                if (i != file){
+                    board.getSquare(rank, i).toggleHighlight();
+                    influence += 1;
+                }
+            }
+
+            for (int i = 1; i <= 8; i++){
+                if (i != rank){
+                    board.getSquare(i, file).toggleHighlight();
+                    influence += 1;
+                }
+            }
+
         }
+        return influence;
+    }
+
+    public int maxInfluence(int rank,int file){
+        return 0;
     }
 
     public double dist(int r1, int f1, int r2, int f2){

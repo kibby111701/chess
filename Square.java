@@ -20,7 +20,7 @@ public class Square{
 
     public void toggleHighlight(){
         this.isHighlighted = !this.isHighlighted;
-        if (isHighlighted && !piece.equals("r")){
+        if (isHighlighted && !piece.equals("r") && !piece.equals("b") && !piece.equals("q")){
             this.piece = "*";
         }
     }
