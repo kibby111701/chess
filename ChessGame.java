@@ -1,3 +1,5 @@
+import java.util.*;
+
 public class ChessGame{
 
     private Board board;
@@ -110,8 +112,26 @@ public class ChessGame{
         return influence;
     }
 
-    public int maxInfluence(int rank,int file){
-        return 0;
+    public void maxInfluence(){
+        int maxInfluence = 0;
+        ArrayList<Square> maxes = new ArrayList<Square>();
+        for (int row = 1; row <= 8; row++){
+            for (int col = 1; col <= 8; col++){
+                board.clearBoard();
+                int influence = placeQueen(row, col);
+                if (influence >= maxInfluence){
+                    maxes.add(board.getSquare(row, col));
+                }
+            }
+        }
+        while (maxes.size() > 4){
+            maxes.remove(0);
+        }
+
+        for (int squares = 0; squares < maxes.size(); squares++){
+            maxes.get(squares).toggleHighlight();
+        }
+
     }
 
     public double dist(int r1, int f1, int r2, int f2){

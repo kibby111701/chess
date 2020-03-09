@@ -32,11 +32,13 @@ public class Board{
         return squares[squares.length - rank][file - 1];
     }
 
-    // public void clearBoard(){
-    //     for (int i = 0; i <= 7; i++){
-    //         for (int j = 0; j <= 7; j++){
-    //             if squares[i][j]
-    //         }
-    //     }
-    // }
+    public void clearBoard(){
+        for (int i = 0; i <= 7; i++){
+            for (int j = 0; j <= 7; j++){
+                if (squares[i][j].isHighlighted()){
+                    squares[i][j].toggleHighlight();
+                }
+            }
+        }
+    }
 }
