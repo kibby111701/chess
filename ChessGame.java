@@ -3,9 +3,13 @@ import java.util.*;
 public class ChessGame{
 
     private Board board;
+    private int numRanks;
+    private int numFiles;
 
     public ChessGame() {
-        this.board = new Board();
+        this.board = new Board(10,25);
+        numRanks = board.getRankCount();
+        numFiles = board.getFileCount();
     }
 
     public int placeRook(int rank, int file){
@@ -14,14 +18,14 @@ public class ChessGame{
         if (board.getSquare(rank, file) != null){
             board.getSquare(rank, file).setPiece("r");
 
-            for (int i = 1; i <= 8; i++){
+            for (int i = 1; i <= numFiles; i++){
                 if (i != file){
                     board.getSquare(rank, i).toggleHighlight();
                     influence += 1;
                 }
             }
 
-            for (int i = 1; i <= 8; i++){
+            for (int i = 1; i <= numRanks; i++){
                 if (i != rank){
                     board.getSquare(i, file).toggleHighlight();
                     influence += 1;
@@ -41,8 +45,8 @@ public class ChessGame{
 
             board.getSquare(rank, file).setPiece("k");
 
-            for (int i = 1; i <= 8; i++){
-                for (int j = 1; j <= 8; j++){
+            for (int i = 1; i <= numRanks; i++){
+                for (int j = 1; j <= numFiles; j++){
                     if (dist(rank, file, i, j) == Math.sqrt(5)){
                         board.getSquare(i, j).toggleHighlight();
                         influence += 1;
@@ -60,8 +64,8 @@ public class ChessGame{
         if (board.getSquare(rank, file) != null){
             board.getSquare(rank, file).setPiece("b");
 
-            for (int i = 1; i <= 8; i++){
-                for (int j = 1; j <= 8; j++){
+            for (int i = 1; i <= numRanks; i++){
+                for (int j = 1; j <= numFiles; j++){
                     int rankDist = Math.abs(rank - i);
                     int fileDist = Math.abs(file - j);
 
@@ -82,8 +86,8 @@ public class ChessGame{
         if (board.getSquare(rank, file) != null){
             board.getSquare(rank, file).setPiece("q");
 
-            for (int i = 1; i <= 8; i++){
-                for (int j = 1; j <= 8; j++){
+            for (int i = 1; i <= numRanks; i++){
+                for (int j = 1; j <= numFiles; j++){
                     int rankDist = Math.abs(rank - i);
                     int fileDist = Math.abs(file - j);
 
@@ -94,14 +98,14 @@ public class ChessGame{
                 }
             }
 
-            for (int i = 1; i <= 8; i++){
+            for (int i = 1; i <= numFiles; i++){
                 if (i != file){
                     board.getSquare(rank, i).toggleHighlight();
                     influence += 1;
                 }
             }
 
-            for (int i = 1; i <= 8; i++){
+            for (int i = 1; i <= numRanks; i++){
                 if (i != rank){
                     board.getSquare(i, file).toggleHighlight();
                     influence += 1;
@@ -115,21 +119,26 @@ public class ChessGame{
     public void maxInfluence(){
         int maxInfluence = 0;
         ArrayList<Square> maxes = new ArrayList<Square>();
-        for (int row = 1; row <= 8; row++){
-            for (int col = 1; col <= 8; col++){
+        
+        for (int row = 1; row <= numRanks; row++){
+            for (int col = 1; col <= numFiles; col++){
                 board.clearBoard();
                 int influence = placeQueen(row, col);
                 if (influence >= maxInfluence){
                     maxes.add(board.getSquare(row, col));
+                    maxInfluence = influence;
                 }
             }
         }
+        board.clearBoard();
+
         while (maxes.size() > 4){
             maxes.remove(0);
         }
 
         for (int squares = 0; squares < maxes.size(); squares++){
-            maxes.get(squares).toggleHighlight();
+            Square currentSquare = maxes.get(squares);
+            currentSquare.toggleHighlight();
         }
 
     }
@@ -144,8 +153,8 @@ public class ChessGame{
 
     public String toString(){
         String textBoard = "";
-        for (int i = 1; i <= 8; i++){
-            for (int j = 1; j <= 8; j++){
+        for (int i = 1; i <= numRanks; i++){
+            for (int j = 1; j <= numFiles; j++){
                 textBoard = textBoard + board.getSquare(i, j).getPiece() + " ";
             }
             textBoard = textBoard + "\n";
